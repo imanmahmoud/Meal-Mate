@@ -3,6 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="primary">#638C6D</color>
+    <color name="primaryOpacity">#80638C6D</color>
     <color name="cream">#F8FAE5</color>
     <color name="lightOrange">#DF6D2D</color>
     <color name="darkOrange">#C84C05</color>
