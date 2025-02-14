@@ -18,4 +18,8 @@
     <string name="or">or</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="tvSignIn">Sign in</string>
+    <string name="meal_name">Meal Name</string>
+    <string name="discover">Discover</string>
+    <string name="your_daily_inspiration_of_recipe">Your daily inspirations of recipe:</string>
+    <string name="another_suggestions">Another Suggestions</string>
 </resources>
