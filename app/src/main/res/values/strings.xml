@@ -16,4 +16,6 @@
     <string name="full_name">enter your full name</string>
     <string name="name">Full Name</string>
     <string name="or">or</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="tvSignIn">Sign in</string>
 </resources>

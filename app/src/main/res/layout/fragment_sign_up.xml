@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".SignUp"
+    tools:context=".Auth.view.signup.SignUp"
     android:background="@color/primary">
 
 
@@ -181,17 +181,29 @@
         android:layout_marginTop="50dp" />
 
     <!-- Already have an account -->
-<!--    <TextView
+    <TextView
         android:id="@+id/tvAlreadyHaveAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="32dp"
         android:text="@string/already_have_an_account"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_marginStart="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnGoogleSignup" />
+
+    <TextView
+        android:id="@+id/tvSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/tvSignIn"
         android:textColor="@color/lightOrange"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnGoogleSignup" />-->
+        app:layout_constraintStart_toEndOf="@+id/tvAlreadyHaveAccount"
+        app:layout_constraintTop_toBottomOf="@+id/btnGoogleSignup" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
