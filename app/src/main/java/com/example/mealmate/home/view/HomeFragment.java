@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -50,11 +51,14 @@ public class HomeFragment extends Fragment implements IHomeView {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        presenter.getRandomMeal();
         mealImage = view.findViewById(R.id.iv_random_meal);
         mealName = view.findViewById(R.id.tv_meal_title);
         mealDescription = view.findViewById(R.id.tv_meal_description);
         cvMeal = view.findViewById(R.id.card_random_meal);
-        presenter.getRandomMeal();
+        cvMeal.setOnClickListener(v -> {
+            Navigation.findNavController(view).navigate(R.id.action_homeFragment2_to_mealInfoFragment);
+        });
 
 
         return view;

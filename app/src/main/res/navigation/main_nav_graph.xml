@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment2"
         android:name="com.example.mealmate.home.view.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment2_to_mealInfoFragment"
+            app:destination="@id/mealInfoFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.example.mealmate.favorite.view.FavoriteFragment"
@@ -25,4 +29,9 @@
         android:name="com.example.mealmate.search.view.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/mealInfoFragment"
+        android:name="com.example.mealmate.MealInfoFragment"
+        android:label="fragment_meal_info"
+        tools:layout="@layout/fragment_meal_info" />
 </navigation>
