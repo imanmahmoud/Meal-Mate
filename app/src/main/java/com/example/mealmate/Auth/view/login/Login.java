@@ -1,6 +1,7 @@
 package com.example.mealmate.Auth.view.login;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.mealmate.Auth.presenter.LoginPresenter;
+import com.example.mealmate.MainActivity;
 import com.example.mealmate.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -32,6 +34,7 @@ public class Login extends Fragment implements ILoginView {
     private TextInputLayout emailInputLayout;
     private TextInputLayout passwordInputLayout;
     private Button btnSkip;
+
 
 
     public Login() {
@@ -62,7 +65,10 @@ public class Login extends Fragment implements ILoginView {
         etEmail = view.findViewById(R.id.etEmail);
         etPassword = view.findViewById(R.id.etPassword);
 
-        btnSkip.setOnClickListener(v -> {});
+        btnSkip.setOnClickListener(v -> {
+           Intent intent = new Intent(getActivity(), MainActivity.class);
+            startActivity(intent);
+        });
 
         etEmail.addTextChangedListener(new TextWatcher() {
             @Override

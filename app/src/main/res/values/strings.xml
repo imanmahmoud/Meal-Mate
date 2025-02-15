@@ -22,4 +22,8 @@
     <string name="discover">Discover</string>
     <string name="your_daily_inspiration_of_recipe">Your daily inspirations of recipe:</string>
     <string name="another_suggestions">Another Suggestions</string>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="favorite">Favorite</string>
+    <string name="plan">Plan</string>
 </resources>
