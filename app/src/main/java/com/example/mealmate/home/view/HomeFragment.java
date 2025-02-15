@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment implements IHomeView {
         mealName = view.findViewById(R.id.tv_meal_title);
         mealDescription = view.findViewById(R.id.tv_meal_description);
         cvMeal = view.findViewById(R.id.card_random_meal);
-
+        presenter.getRandomMeal();
 
 
         return view;
