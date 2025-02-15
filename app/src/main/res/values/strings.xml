@@ -26,4 +26,12 @@
     <string name="search">Search</string>
     <string name="favorite">Favorite</string>
     <string name="plan">Plan</string>
+    <string name="calendar">Calendar</string>
+    <string name="sticky_toffee_pudding_ultimate">Sticky Toffee Pudding Ultimate</string>
+    <string name="dessert">Dessert</string>
+    <string name="british">British</string>
+    <string name="ingredients">Ingredients:</string>
+    <string name="instructions">Instructions:</string>
+    <string name="step_by_step_instructions_go_here">Step-by-step instructions go here.</string>
+    <string name="youtube">YouTube:</string>
 </resources>
