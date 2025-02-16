@@ -19,6 +19,10 @@ public class MealsRepository {
         return remoteSource.getRandomMeal();
     }
 
+    public Single<MealResponse> getMealById(String id) {
+        return remoteSource.getMealById(id);
+    }
+
 
 
 

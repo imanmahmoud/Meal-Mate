@@ -6,15 +6,14 @@
     android:layout_width="120dp"
     android:layout_height="160dp"
     app:cardCornerRadius="12dp"
-    app:cardElevation="4dp"
-    android:layout_margin="8dp">
+    android:layout_margin="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:padding="20dp">
+        >
 
         <ImageView
             android:id="@+id/ingredient_image"
@@ -27,9 +26,11 @@
             android:id="@+id/ingredient_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ingredient"
+            android:text="@string/ingredient"
+
+            android:layout_marginHorizontal="6dp"
             android:textSize="16sp"
-            android:textStyle="bold"
+            android:textColor="@color/black"
             android:gravity="center"
             android:layout_marginTop="8dp"/>
 

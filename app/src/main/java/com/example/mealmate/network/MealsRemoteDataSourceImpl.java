@@ -34,5 +34,9 @@ public class MealsRemoteDataSourceImpl {
         return apiService.getRandomMeal();
     }
 
+    public Single<MealResponse> getMealById(String id) {
+        return apiService.getMealById(id);
+    }
+
 
 }

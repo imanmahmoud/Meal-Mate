@@ -1,5 +1,8 @@
 package com.example.mealmate.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MealModel {
     private String idMeal;
     private String strMeal;
@@ -477,5 +480,23 @@ public class MealModel {
 
     public void setDateModified(Object dateModified) {
         this.dateModified = dateModified;
+    }
+
+    public List<String> getAllIngredients() {
+        List<String> ingredients = new ArrayList<>();
+
+        String[] allIngredients = {
+                strIngredient1, strIngredient2, strIngredient3, strIngredient4, strIngredient5,
+                strIngredient6, strIngredient7, strIngredient8, strIngredient9, strIngredient10,
+                strIngredient11, strIngredient12, strIngredient13, strIngredient14, strIngredient15,
+                strIngredient16, strIngredient17, strIngredient18, strIngredient19, strIngredient20
+        };
+
+        for (String ingredient : allIngredients) {
+            if (ingredient != null && !ingredient.trim().isEmpty()) {
+                ingredients.add(ingredient);
+            }
+        }
+        return ingredients;
     }
 }
