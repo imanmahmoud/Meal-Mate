@@ -34,4 +34,5 @@
     <string name="instructions">Instructions:</string>
     <string name="step_by_step_instructions_go_here">Step-by-step instructions go here.</string>
     <string name="youtube">YouTube:</string>
+    <string name="ingredient">Ingredient</string>
 </resources>

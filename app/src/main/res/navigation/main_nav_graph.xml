@@ -31,7 +31,11 @@
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/mealInfoFragment"
-        android:name="com.example.mealmate.MealInfoFragment"
+        android:name="com.example.mealmate.mealDetails.view.MealInfoFragment"
         android:label="fragment_meal_info"
-        tools:layout="@layout/fragment_meal_info" />
+        tools:layout="@layout/fragment_meal_info" >
+        <argument
+            android:name="MealId"
+            app:argType="string" />
+    </fragment>
 </navigation>

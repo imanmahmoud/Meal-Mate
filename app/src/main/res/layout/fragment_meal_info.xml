@@ -11,7 +11,7 @@
         android:background="@color/cream"
         android:padding="16dp">
 
-        <!-- Image container with rounded corners and overlay icons -->
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_meal_info_image"
             android:layout_width="0dp"
@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <!-- Recipe Image -->
+
                 <ImageView
                     android:id="@+id/recipe_image"
                     android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/beef_burger_image" />
 
-                <!-- Favorite Icon (Top-Right) -->
+
 
 
                 <ImageButton
@@ -49,7 +49,7 @@
                     android:src="@drawable/ic_favorite"
                     app:tint="@color/cream" />
 
-                <!-- Calendar Icon (Top-Left) -->
+
                 <ImageButton
                     android:id="@+id/calendar_icon"
                     android:layout_width="52dp"
@@ -65,7 +65,7 @@
             </FrameLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Title & Category Card -->
+
         <androidx.cardview.widget.CardView
             android:id="@+id/card_title"
             android:layout_width="0dp"
@@ -120,7 +120,7 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Ingredients Section -->
+
         <TextView
             android:id="@+id/ingredients_title"
             android:layout_width="wrap_content"
@@ -144,7 +144,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ingredients_title" />
 
-        <!-- Instructions Section -->
+
         <androidx.cardview.widget.CardView
             android:id="@+id/card_instructions"
             android:layout_width="0dp"
@@ -183,7 +183,7 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- YouTube Video -->
+
         <TextView
             android:id="@+id/youtube_title"
             android:layout_width="wrap_content"

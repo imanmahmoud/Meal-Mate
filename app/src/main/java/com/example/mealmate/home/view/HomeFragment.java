@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -29,6 +30,7 @@ public class HomeFragment extends Fragment implements IHomeView {
     TextView mealDescription;
     CardView cvMeal;
     HomePresenter presenter;
+    private RecyclerView recyclerView;
 
     MealModel meal;
 
@@ -43,6 +45,7 @@ public class HomeFragment extends Fragment implements IHomeView {
         super.onCreate(savedInstanceState);
         // change the constructor of HomePresenter to the following MealsLocalDataSourceImpl() to fix the bug
         presenter = new HomePresenter(new MealsRepository(MealsRemoteDataSourceImpl.getInstance(), new MealsLocalDataSourceImpl()), this);
+        presenter.getRandomMeal();
 
     }
 
@@ -51,13 +54,16 @@ public class HomeFragment extends Fragment implements IHomeView {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        presenter.getRandomMeal();
+
         mealImage = view.findViewById(R.id.iv_random_meal);
         mealName = view.findViewById(R.id.tv_meal_title);
         mealDescription = view.findViewById(R.id.tv_meal_description);
         cvMeal = view.findViewById(R.id.card_random_meal);
         cvMeal.setOnClickListener(v -> {
-            Navigation.findNavController(view).navigate(R.id.action_homeFragment2_to_mealInfoFragment);
+           // Navigation.findNavController(view).navigate(R.id.action_homeFragment2_to_mealInfoFragment);
+
+            HomeFragmentDirections.ActionHomeFragment2ToMealInfoFragment action = HomeFragmentDirections.actionHomeFragment2ToMealInfoFragment(meal.getIdMeal());
+            Navigation.findNavController(v).navigate(action);
         });
 
 
@@ -69,7 +75,7 @@ public class HomeFragment extends Fragment implements IHomeView {
     public void showData(MealModel mealModel) {
         meal = mealModel;
         Glide.with(getActivity())
-                .load(meal.getStrMealThumb())
+                .load(meal.getStrMealThumb())//.circleCrop()
                 .apply(new RequestOptions().override(100, 100))
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_launcher_background)
