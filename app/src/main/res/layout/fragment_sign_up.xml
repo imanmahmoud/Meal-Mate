@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".Auth.view.signup.SignUp"
+    tools:context=".ui.Auth.view.signup.SignUp"
     android:background="@color/primary">
 
 
