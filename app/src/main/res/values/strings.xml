@@ -35,4 +35,7 @@
     <string name="step_by_step_instructions_go_here">Step-by-step instructions go here.</string>
     <string name="youtube">YouTube:</string>
     <string name="ingredient">Ingredient</string>
+    <string name="category">Category</string>
+    <string name="country">Country</string>
+    <string name="beef_meals">Beef Meals</string>
 </resources>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cream"
-    tools:context=".home.view.HomeFragment"
+    tools:context=".ui.home.view.HomeFragment"
     android:padding="16dp">
 
 
