@@ -12,10 +12,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.mealmate.R;
 import com.example.mealmate.model.meal.MealModel;
-
 
 import java.util.List;
 
@@ -24,12 +22,14 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MyViewHolder> 
     private Context context;
     private List<MealModel> mealModelList;
     private OnMealClickListener listener;
+    private Boolean isFavItem;
 
 
-    public MealAdapter(Context context, List<MealModel> mealModelList , OnMealClickListener listener) {
+    public MealAdapter(Context context, List<MealModel> mealModelList, OnMealClickListener listener, Boolean isFavItem) {
         this.context = context;
         this.mealModelList = mealModelList;
         this.listener = listener;
+        this.isFavItem = isFavItem;
     }
 
     public void setList(List<MealModel> mealModelList) {
@@ -62,6 +62,17 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MyViewHolder> 
             listener.onMealClick(currentMeal);
 
         });
+        if (isFavItem){
+            holder.imgFavMinus.setVisibility(View.VISIBLE);
+            holder.imgFavMinus.setOnClickListener(v -> {
+                listener.onFavMinusClick(currentMeal);
+            });
+
+        }
+        else{
+            holder.imgFavMinus.setVisibility(View.GONE);
+        }
+
     }
 
 
@@ -73,6 +84,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MyViewHolder> 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView titleTxt;
+        ImageView imgFavMinus;
         CardView cardView;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -80,6 +92,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MyViewHolder> 
             imageView = itemView.findViewById(R.id.img_meal);
             titleTxt = itemView.findViewById(R.id.tv_meal_name);
             cardView = itemView.findViewById(R.id.cv_meal);
+            imgFavMinus = itemView.findViewById(R.id.img_fav_minus_icon);
         }
     }
 

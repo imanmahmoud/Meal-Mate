@@ -1,5 +1,6 @@
 package com.example.mealmate.ui.mealDetails.presenter;
 
+import com.example.mealmate.model.meal.MealModel;
 import com.example.mealmate.ui.mealDetails.view.IMealInfoView;
 import com.example.mealmate.repo.MealsRepository;
 
@@ -27,7 +28,7 @@ public class MealInfoPresenter {
                             String embeddedVideo = getVideoId(mealModel.getStrYoutube());
                             view.showData(mealModel, embeddedVideo);
                         },
-                        error -> view.showError(error.getMessage())
+                        error -> view.showMessage(error.getMessage())
                 );
 
     }
@@ -39,6 +40,22 @@ public class MealInfoPresenter {
             video = "<iframe width=\"570\" height=\"300\" src=\"https://www.youtube.com/embed/" + videoId + "\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>";
         }
         return video;
+    }
+
+    public void addToFavorite(MealModel meal) {
+        if(!meal.isFav){
+            repo.insertMealToFav(meal)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            () -> {view.showMessage("Added to favorite");
+                                meal.setFav(true);},
+                            error -> view.showMessage(error.getMessage()));
+        }else{
+            view.showMessage("Already in favorite");
+        }
+
+
     }
 
 

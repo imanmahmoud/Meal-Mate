@@ -16,7 +16,6 @@ public interface ApiService {
     @GET("lookup.php")
     Single<MealResponse> getMealById(@Query("i") String id);
 
-
     @GET("categories.php")
      Single<CategoryResponse> getCategories();
 

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,12 +23,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.mealmate.R;
+import com.example.mealmate.repo.SharedPref;
 import com.example.mealmate.ui.adapter.ItemAdapter;
 import com.example.mealmate.db.MealsLocalDataSourceImpl;
 import com.example.mealmate.ui.mealDetails.presenter.MealInfoPresenter;
 import com.example.mealmate.model.meal.MealModel;
 import com.example.mealmate.network.MealsRemoteDataSourceImpl;
 import com.example.mealmate.repo.MealsRepository;
+import com.example.mealmate.utils.CustomeSnakeBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -42,9 +45,13 @@ public class MealInfoFragment extends Fragment implements IMealInfoView {
     TextView tvRecipeArea;
     TextView tvRecipeInstructions;
     WebView webView;
+    ImageButton ibFavorite;
+    ImageButton ibPlan;
 
     RecyclerView recyclerView;
     private ItemAdapter ingredientsAdapter;
+
+
 
 
     public MealInfoFragment() {
@@ -55,9 +62,7 @@ public class MealInfoFragment extends Fragment implements IMealInfoView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new MealInfoPresenter(new MealsRepository(MealsRemoteDataSourceImpl.getInstance(), new MealsLocalDataSourceImpl()), this);
-        String mealId = MealInfoFragmentArgs.fromBundle(getArguments()).getMealId();
-        presenter.getMealInfo(mealId);
+
     }
 
     @Override
@@ -65,6 +70,14 @@ public class MealInfoFragment extends Fragment implements IMealInfoView {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_meal_info, container, false);
+        presenter = new MealInfoPresenter(new MealsRepository(MealsRemoteDataSourceImpl.getInstance(),  MealsLocalDataSourceImpl.getInstance(getActivity())), this);
+        String mealId = MealInfoFragmentArgs.fromBundle(getArguments()).getMealObject().getIdMeal();
+
+        //close at network error
+        presenter.getMealInfo(mealId);
+
+        ibFavorite = view.findViewById(R.id.favorite_icon);
+        ibPlan = view.findViewById(R.id.calendar_icon);
 
         recyclerView = view.findViewById(R.id.ingredients_recycler);
         // GridLayoutManager layoutManager=new GridLayoutManager();
@@ -81,19 +94,26 @@ public class MealInfoFragment extends Fragment implements IMealInfoView {
         tvRecipeInstructions = view.findViewById(R.id.instructions_text);
         webView = view.findViewById(R.id.youtube_webview);
 
+
+        ibFavorite.setOnClickListener(v -> {
+            meal.uId= SharedPref.getInstance(getActivity()).getUSERID();
+
+            presenter.addToFavorite(meal);
+        });
+
         return view;
     }
 
 
     @Override
     public void showData(MealModel mealModel, String embeddedVideoUrl) {
-        showCustomSnackbar(recyclerView, "Success", getActivity());
+      // CustomeSnakeBar.showCustomSnackbar(recyclerView, "Success", getActivity());
 
 
         meal = mealModel;
         Glide.with(getActivity())
                 .load(meal.getStrMealThumb())//.circleCrop()
-                .apply(new RequestOptions().override(100, 100))
+               /* .apply(new RequestOptions().override(100, 100))*/
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_launcher_background)
                 .into(ivRecipeImage);
@@ -106,18 +126,8 @@ public class MealInfoFragment extends Fragment implements IMealInfoView {
     }
 
     @Override
-    public void showError(String message) {
-        Snackbar snackbar = Snackbar.make(recyclerView, "Failed", Snackbar.LENGTH_LONG);
-
-// Change text color
-        snackbar.setTextColor(getResources().getColor(R.color.black));
-
-// Change background color
-        View snackbarView = snackbar.getView();
-        snackbarView.setBackgroundColor(getResources().getColor(R.color.cream));
-
-        snackbar.show();
-
+    public void showMessage(String message) {
+        CustomeSnakeBar.showCustomSnackbar(recyclerView, message, getActivity());
     }
 
     public void loadVideo(String videoId) {
@@ -127,40 +137,6 @@ public class MealInfoFragment extends Fragment implements IMealInfoView {
     }
 
 
-    public static void showCustomSnackbar(View view, String message, Context context) {
-        Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
 
-        // Get the Snackbar's view
-        View snackbarView = snackbar.getView();
-
-        // Set background color with rounded corners
-        GradientDrawable background = new GradientDrawable();
-        background.setColor(context.getResources().getColor(R.color.cream)); // Your custom background color
-        background.setCornerRadius(40f); // Adjust this for roundness
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            snackbarView.setBackground(background);
-        } else {
-            snackbarView.setBackgroundColor(context.getResources().getColor(R.color.cream)); // Fallback for old devices
-        }
-
-        // Get the parent layout and modify its parameters
-        ViewGroup.LayoutParams params = snackbarView.getLayoutParams();
-        if (params instanceof FrameLayout.LayoutParams) {
-            ((FrameLayout.LayoutParams) params).width = ViewGroup.LayoutParams.WRAP_CONTENT;  // Wrap content width
-            ((FrameLayout.LayoutParams) params).gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL; // Bottom center
-            ((FrameLayout.LayoutParams) params).bottomMargin = 100; // Adjust margin from the bottom
-        }
-
-        snackbarView.setLayoutParams(params);
-
-        // Change text color
-        snackbar.setTextColor(Color.BLACK);
-
-        // Change action button color
-        snackbar.setActionTextColor(Color.YELLOW);
-
-        snackbar.show();
-    }
 
 }

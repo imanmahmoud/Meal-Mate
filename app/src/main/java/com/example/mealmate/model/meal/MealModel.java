@@ -1,12 +1,21 @@
 package com.example.mealmate.model.meal;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MealModel {
+@Entity(tableName = "fav_meals_table", primaryKeys = {"uId", "idMeal"})
+public class MealModel implements Serializable {
+    @NonNull
+    public String uId;
+    public boolean isFav=false;
+    @NonNull
     private String idMeal;
     private String strMeal;
-    private Object strDrinkAlternate;
+    //    private Object strDrinkAlternate;
     private String strCategory;
     private String strArea;
     private String strInstructions;
@@ -54,9 +63,26 @@ public class MealModel {
     private String strMeasure19;
     private String strMeasure20;
     private String strSource;
-    private Object strImageSource;
-    private Object strCreativeCommonsConfirmed;
-    private Object dateModified;
+
+    public boolean isFav() {
+        return isFav;
+    }
+
+    public void setFav(boolean fav) {
+        isFav = fav;
+    }
+
+    @NonNull
+    public String getuId() {
+        return uId;
+    }
+
+    public void setuId(@NonNull String uId) {
+        this.uId = uId;
+    }
+    // private Object strImageSource;
+    //  private Object strCreativeCommonsConfirmed;
+    // private Object dateModified;
 
     public String getIdMeal() {
         return idMeal;
@@ -74,13 +100,13 @@ public class MealModel {
         this.strMeal = strMeal;
     }
 
-    public Object getStrDrinkAlternate() {
+   /* public Object getStrDrinkAlternate() {
         return strDrinkAlternate;
     }
 
     public void setStrDrinkAlternate(Object strDrinkAlternate) {
         this.strDrinkAlternate = strDrinkAlternate;
-    }
+    }*/
 
     public String getStrCategory() {
         return strCategory;
@@ -458,7 +484,7 @@ public class MealModel {
         this.strSource = strSource;
     }
 
-    public Object getStrImageSource() {
+   /* public Object getStrImageSource() {
         return strImageSource;
     }
 
@@ -468,9 +494,9 @@ public class MealModel {
 
     public Object getStrCreativeCommonsConfirmed() {
         return strCreativeCommonsConfirmed;
-    }
+    }*/
 
-    public void setStrCreativeCommonsConfirmed(Object strCreativeCommonsConfirmed) {
+/*    public void setStrCreativeCommonsConfirmed(Object strCreativeCommonsConfirmed) {
         this.strCreativeCommonsConfirmed = strCreativeCommonsConfirmed;
     }
 
@@ -480,7 +506,7 @@ public class MealModel {
 
     public void setDateModified(Object dateModified) {
         this.dateModified = dateModified;
-    }
+    }*/
 
     public List<String> getAllIngredients() {
         List<String> ingredients = new ArrayList<>();
