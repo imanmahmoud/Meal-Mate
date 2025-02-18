@@ -1,17 +1,24 @@
 package com.example.mealmate.ui.Auth.presenter;
 
+import android.content.Context;
+
+import com.example.mealmate.repo.SharedPref;
 import com.example.mealmate.ui.Auth.firebaseAuth.FirebaseAuthCallback;
 import com.example.mealmate.ui.Auth.firebaseAuth.FirebaseAuthHelper;
 import com.example.mealmate.ui.Auth.view.signup.ISignupView;
 import com.google.firebase.auth.FirebaseUser;
 
 public class SignupPresenter implements FirebaseAuthCallback {
+    Context context;
     private ISignupView signupView;
     private FirebaseAuthHelper authHelper;
+    SharedPref sharedPref;
 
-    public SignupPresenter(ISignupView signupView) {
+    public SignupPresenter(ISignupView signupView, Context context) {
         this.signupView = signupView;
-        this.authHelper = FirebaseAuthHelper.getInstance(); // Use the singleton instance
+        this.context = context;
+        this.authHelper = FirebaseAuthHelper.getInstance();
+        this.sharedPref=SharedPref.getInstance(context.getApplicationContext());// Use the singleton instance
     }
 
 
@@ -51,6 +58,8 @@ public class SignupPresenter implements FirebaseAuthCallback {
 
     @Override
     public void onSuccess(FirebaseUser firebaseUser) {
+        sharedPref.setLogged(true);
+        sharedPref.setUSERID(firebaseUser.getUid());
 
         signupView.hideLoading();
         signupView.onSignupSuccess(firebaseUser);

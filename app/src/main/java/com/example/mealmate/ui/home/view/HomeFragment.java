@@ -21,6 +21,7 @@ import com.example.mealmate.ui.home.presenter.HomePresenter;
 import com.example.mealmate.model.meal.MealModel;
 import com.example.mealmate.network.MealsRemoteDataSourceImpl;
 import com.example.mealmate.repo.MealsRepository;
+import com.example.mealmate.utils.CustomeSnakeBar;
 
 
 public class HomeFragment extends Fragment implements IHomeView {
@@ -54,7 +55,7 @@ public class HomeFragment extends Fragment implements IHomeView {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        presenter = new HomePresenter(new MealsRepository(MealsRemoteDataSourceImpl.getInstance(), new MealsLocalDataSourceImpl()), this);
+        presenter = new HomePresenter(new MealsRepository(MealsRemoteDataSourceImpl.getInstance(),MealsLocalDataSourceImpl.getInstance(getActivity())), this);
         presenter.getRandomMeal();
 
         mealImage = view.findViewById(R.id.iv_random_meal);
@@ -64,7 +65,7 @@ public class HomeFragment extends Fragment implements IHomeView {
         cvMeal.setOnClickListener(v -> {
            // Navigation.findNavController(view).navigate(R.id.action_homeFragment2_to_mealInfoFragment);
 
-            HomeFragmentDirections.ActionHomeFragment2ToMealInfoFragment action = HomeFragmentDirections.actionHomeFragment2ToMealInfoFragment(meal.getIdMeal());
+            HomeFragmentDirections.ActionHomeFragment2ToMealInfoFragment action = HomeFragmentDirections.actionHomeFragment2ToMealInfoFragment(meal);
             Navigation.findNavController(v).navigate(action);
         });
 
@@ -78,7 +79,7 @@ public class HomeFragment extends Fragment implements IHomeView {
         meal = mealModel;
         Glide.with(getActivity())
                 .load(meal.getStrMealThumb())//.circleCrop()
-                .apply(new RequestOptions().override(100, 100))
+                /*.apply(new RequestOptions().override(100, 100))*/
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_launcher_background)
                 .into(mealImage);
@@ -89,6 +90,6 @@ public class HomeFragment extends Fragment implements IHomeView {
 
     @Override
     public void showError(String message) {
-        Toast.makeText(getActivity(), "Error: " + message, Toast.LENGTH_SHORT).show();
+        CustomeSnakeBar.showCustomSnackbar(recyclerView, message, getActivity());
     }
 }

@@ -1,6 +1,7 @@
 package com.example.mealmate.ui.Auth.view.signup;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -15,8 +16,10 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.example.mealmate.MainActivity;
 import com.example.mealmate.ui.Auth.presenter.SignupPresenter;
 import com.example.mealmate.R;
+import com.example.mealmate.utils.CustomeSnakeBar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -41,14 +44,15 @@ public class SignUp extends Fragment implements ISignupView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new SignupPresenter(this);
-        progressDialog = new ProgressDialog(getContext());
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
+        presenter = new SignupPresenter(this, getActivity());
+        progressDialog = new ProgressDialog(getContext());
 
         nameInputLayout = view.findViewById(R.id.nameInputLayout);
         emailInputLayout = view.findViewById(R.id.emailInputLayout);
@@ -148,24 +152,30 @@ public class SignUp extends Fragment implements ISignupView {
 
     @Override
     public void onSignupSuccess(Object result) {
+        CustomeSnakeBar.showCustomSnackbar(getView(), "Success", getActivity());
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        startActivity(intent);
+
         // Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
-        progressDialog.setMessage("Success");
+       /* progressDialog.setMessage("Success");
         progressDialog.setCancelable(false);
         progressDialog.show();
-        new Handler().postDelayed(() -> progressDialog.dismiss(), 3000);
+        new Handler().postDelayed(() -> progressDialog.dismiss(), 3000);*/
         //go to home screen
 
     }
 
     @Override
     public void onSignupFailure(String errorMessage) {
+
+        CustomeSnakeBar.showCustomSnackbar(getView(), errorMessage, getActivity());
         // Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
-        progressDialog.setMessage("failed");
+      /*  progressDialog.setMessage("failed");
         progressDialog.setCancelable(false); // Prevent dismissing by tapping outside
         progressDialog.show();
 
 
-        new Handler().postDelayed(() -> progressDialog.dismiss(), 3000);
+        new Handler().postDelayed(() -> progressDialog.dismiss(), 3000);*/
     }
 
     @Override

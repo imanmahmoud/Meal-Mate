@@ -16,9 +16,11 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.example.mealmate.repo.SharedPref;
 import com.example.mealmate.ui.Auth.presenter.LoginPresenter;
 import com.example.mealmate.MainActivity;
 import com.example.mealmate.R;
+import com.example.mealmate.utils.CustomeSnakeBar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -45,8 +47,7 @@ public class Login extends Fragment implements ILoginView {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new LoginPresenter(this);
-        progressDialog = new ProgressDialog(getContext());
+
 
     }
 
@@ -55,6 +56,9 @@ public class Login extends Fragment implements ILoginView {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+
+        presenter = new LoginPresenter(this,getActivity());
+        progressDialog = new ProgressDialog(getContext());
 
         emailInputLayout = view.findViewById(R.id.emailInputLayout);
         passwordInputLayout = view.findViewById(R.id.passwordInputLayout);
@@ -66,6 +70,7 @@ public class Login extends Fragment implements ILoginView {
         etPassword = view.findViewById(R.id.etPassword);
 
         btnSkip.setOnClickListener(v -> {
+            SharedPref.getInstance(getActivity()).setLogged(false);
            Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
         });
@@ -136,25 +141,31 @@ public class Login extends Fragment implements ILoginView {
 
     @Override
     public void onLoginSuccess(Object result) {
+
+        CustomeSnakeBar.showCustomSnackbar(getView(), "Login Success", getActivity());
+
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        startActivity(intent);
         // Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
-        progressDialog.setMessage("Success");
+       /* progressDialog.setMessage("Success");
         progressDialog.setCancelable(false);
         progressDialog.show();
         new Handler().postDelayed(() -> progressDialog.dismiss(), 3000);
-
+*/
         //go to home screen
     }
 
     @Override
     public void onLoginFailure(String errorMessage) {
+        CustomeSnakeBar.showCustomSnackbar(getView(), errorMessage, getActivity());
 
         // Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
-        progressDialog.setMessage("failed");
+       /* progressDialog.setMessage("failed");
         progressDialog.setCancelable(false); // Prevent dismissing by tapping outside
         progressDialog.show();
 
 
-        new Handler().postDelayed(() -> progressDialog.dismiss(), 3000);
+        new Handler().postDelayed(() -> progressDialog.dismiss(), 3000);*/
     }
 
     @Override

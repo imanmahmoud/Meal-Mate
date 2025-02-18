@@ -18,7 +18,11 @@
         android:id="@+id/favoriteFragment"
         android:name="com.example.mealmate.ui.favorite.view.FavoriteFragment"
         android:label="fragment_favorite"
-        tools:layout="@layout/fragment_favorite" />
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_favoriteFragment_to_mealInfoFragment"
+            app:destination="@id/mealInfoFragment" />
+    </fragment>
     <fragment
         android:id="@+id/planFragment"
         android:name="com.example.mealmate.ui.plan.view.PlanFragment"
@@ -39,8 +43,8 @@
         android:label="fragment_meal_info"
         tools:layout="@layout/fragment_meal_info" >
         <argument
-            android:name="MealId"
-            app:argType="string" />
+            android:name="MealObject"
+            app:argType="com.example.mealmate.model.meal.MealModel" />
     </fragment>
     <fragment
         android:id="@+id/sectionSearchFragment"

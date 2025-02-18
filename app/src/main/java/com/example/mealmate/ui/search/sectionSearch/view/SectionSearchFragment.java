@@ -43,7 +43,7 @@ public class SectionSearchFragment extends Fragment implements ISectionSearchVie
     TextView tvTitle;
     View view;
     SearchItem searchItem;
-    ImageView ivFavoriteMinusIcon;
+    //ImageView ivFavoriteMinusIcon;
 
     public SectionSearchFragment() {
         // Required empty public constructor
@@ -62,19 +62,19 @@ public class SectionSearchFragment extends Fragment implements ISectionSearchVie
         // Inflate the layout for this fragment
          view= inflater.inflate(R.layout.fragment_section_search, container, false);
          searchItem= SectionSearchFragmentArgs.fromBundle(getArguments()).getSearchItem();
-        presenter = new SectionSearchPresenter(new MealsRepository(MealsRemoteDataSourceImpl.getInstance(), new MealsLocalDataSourceImpl()), this);
+        presenter = new SectionSearchPresenter(new MealsRepository(MealsRemoteDataSourceImpl.getInstance(),  MealsLocalDataSourceImpl.getInstance(getActivity())), this);
          presenter.getAllMeals(searchItem);
          tvTitle=view.findViewById(R.id.sectionTitle);
          tvTitle.setText(searchItem.getItemName() +"'s Meals");
-         ivFavoriteMinusIcon=view.findViewById(R.id.img_fav_minus_icon);
-       //  ivFavoriteMinusIcon.setVisibility(View.GONE);
+         //ivFavoriteMinusIcon=view.findViewById(R.id.img_fav_minus_icon);
+        // ivFavoriteMinusIcon.setVisibility(View.GONE);
 
          recyclerView = view.findViewById(R.id.mealsRecyclerView);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setHasFixedSize(true);
 
-        myAdapter = new MealAdapter(getActivity(), new ArrayList<>(), this);
+        myAdapter = new MealAdapter(getActivity(), new ArrayList<>(), this,false);
         recyclerView.setAdapter(myAdapter);
         etSearch = view.findViewById(R.id.searchEditText);
         etSearch.addTextChangedListener(new TextWatcher() {
@@ -99,8 +99,13 @@ public class SectionSearchFragment extends Fragment implements ISectionSearchVie
 
     @Override
     public void onMealClick(MealModel mealModel) {
-        Navigation.findNavController(view).navigate(SectionSearchFragmentDirections.actionSectionSearchFragmentToMealInfoFragment(mealModel.getIdMeal()));
+        Navigation.findNavController(view).navigate(SectionSearchFragmentDirections.actionSectionSearchFragmentToMealInfoFragment(mealModel));
 
+    }
+
+    @Override
+    public void onFavMinusClick(MealModel mealModel) {
+        //not needed
     }
 
     @Override

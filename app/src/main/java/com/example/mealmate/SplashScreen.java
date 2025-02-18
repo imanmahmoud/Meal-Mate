@@ -1,5 +1,6 @@
 package com.example.mealmate;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,8 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.mealmate.repo.SharedPref;
 
 public class SplashScreen extends Fragment {
 
@@ -39,7 +42,12 @@ public class SplashScreen extends Fragment {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Navigation.findNavController(view).navigate(R.id.action_splashScreen_to_login);
+                if(SharedPref.getInstance( getActivity()).isLogged()) {
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
+                } else {
+                    Navigation.findNavController(view).navigate(R.id.action_splashScreen_to_login);
+                }
             }
         }, 3000);
     }

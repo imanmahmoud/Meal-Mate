@@ -38,4 +38,5 @@
     <string name="category">Category</string>
     <string name="country">Country</string>
     <string name="beef_meals">Beef Meals</string>
+    <string name="your_favourites">Your Favourites:</string>
 </resources>

@@ -4,9 +4,14 @@ import com.example.mealmate.db.MealsLocalDataSourceImpl;
 import com.example.mealmate.model.Area.AreaResponse;
 import com.example.mealmate.model.categories.CategoryResponse;
 import com.example.mealmate.model.ingredient.IngredientResponse;
+import com.example.mealmate.model.meal.MealModel;
 import com.example.mealmate.model.meal.MealResponse;
 import com.example.mealmate.network.MealsRemoteDataSourceImpl;
 
+import java.util.List;
+
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 
 public class MealsRepository {
@@ -43,6 +48,16 @@ public class MealsRepository {
     }
     public Single<MealResponse> getMealsByArea(String areaName) {
         return remoteSource.getMealsByArea(areaName);
+    }
+
+    public Observable<List<MealModel>> getFavoriteMeals(String uid) {
+        return localDataSource.getFavoriteMeals(uid);
+    }
+    public Completable insertMealToFav(MealModel mealModel) {
+        return localDataSource.insertMealToFav(mealModel);
+    }
+    public Completable deleteMealFromFav(MealModel mealModel) {
+        return localDataSource.deleteMealFromFav(mealModel);
     }
 
 

@@ -64,7 +64,7 @@ public class SearchFragment extends Fragment implements ISearchView, OnSearchCar
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_search, container, false);
-        presenter = new SearchPresenter(new MealsRepository(MealsRemoteDataSourceImpl.getInstance(), new MealsLocalDataSourceImpl()), this);
+        presenter = new SearchPresenter(new MealsRepository(MealsRemoteDataSourceImpl.getInstance(),  MealsLocalDataSourceImpl.getInstance(getActivity())), this);
 
 
         recyclerView = view.findViewById(R.id.rv_search);

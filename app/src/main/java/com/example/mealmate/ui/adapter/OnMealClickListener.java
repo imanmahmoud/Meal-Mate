@@ -4,4 +4,5 @@ import com.example.mealmate.model.meal.MealModel;
 
 public interface OnMealClickListener {
     void onMealClick(MealModel mealModel);
+    void onFavMinusClick(MealModel mealModel);
 }
