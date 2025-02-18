@@ -44,8 +44,7 @@ public class HomeFragment extends Fragment implements IHomeView {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // change the constructor of HomePresenter to the following MealsLocalDataSourceImpl() to fix the bug
-        presenter = new HomePresenter(new MealsRepository(MealsRemoteDataSourceImpl.getInstance(), new MealsLocalDataSourceImpl()), this);
-        presenter.getRandomMeal();
+
 
     }
 
@@ -54,6 +53,9 @@ public class HomeFragment extends Fragment implements IHomeView {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        presenter = new HomePresenter(new MealsRepository(MealsRemoteDataSourceImpl.getInstance(), new MealsLocalDataSourceImpl()), this);
+        presenter.getRandomMeal();
 
         mealImage = view.findViewById(R.id.iv_random_meal);
         mealName = view.findViewById(R.id.tv_meal_title);

@@ -1,5 +1,8 @@
 package com.example.mealmate.network;
 
+import com.example.mealmate.model.Area.AreaResponse;
+import com.example.mealmate.model.categories.CategoryResponse;
+import com.example.mealmate.model.ingredient.IngredientResponse;
 import com.example.mealmate.model.meal.MealResponse;
 
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
@@ -35,6 +38,17 @@ public class MealsRemoteDataSourceImpl {
     public Single<MealResponse> getMealById(String id) {
         return apiService.getMealById(id);
     }
+
+    public Single<CategoryResponse> getCategories() {
+        return apiService.getCategories();
+    }
+    public Single<IngredientResponse> getIngredients() {
+        return apiService.getIngredients();
+    }
+    public Single<AreaResponse> getAreas() {
+        return apiService.getAreas();
+    }
+
 
     public Single<MealResponse> getMealsByCategory(String categoryName) {
         return apiService.getMealsByCategory(categoryName);

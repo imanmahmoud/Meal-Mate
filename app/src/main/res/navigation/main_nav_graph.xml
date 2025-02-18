@@ -28,7 +28,11 @@
         android:id="@+id/searchFragment"
         android:name="com.example.mealmate.ui.search.mainSearch.view.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_sectionSearchFragment"
+            app:destination="@id/sectionSearchFragment" />
+    </fragment>
     <fragment
         android:id="@+id/mealInfoFragment"
         android:name="com.example.mealmate.ui.mealDetails.view.MealInfoFragment"
@@ -37,5 +41,17 @@
         <argument
             android:name="MealId"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/sectionSearchFragment"
+        android:name="com.example.mealmate.ui.search.sectionSearch.view.SectionSearchFragment"
+        android:label="fragment_section_search"
+        tools:layout="@layout/fragment_section_search" >
+        <argument
+            android:name="searchItem"
+            app:argType="com.example.mealmate.model.SearchItem" />
+        <action
+            android:id="@+id/action_sectionSearchFragment_to_mealInfoFragment"
+            app:destination="@id/mealInfoFragment" />
     </fragment>
 </navigation>

@@ -1,66 +1,181 @@
 package com.example.mealmate.ui.search.mainSearch.view;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mealmate.R;
+import com.example.mealmate.db.MealsLocalDataSourceImpl;
+import com.example.mealmate.model.Area.AreaModel;
+import com.example.mealmate.model.SearchItem;
+import com.example.mealmate.model.categories.CategoryModel;
+import com.example.mealmate.model.ingredient.IngredientModel;
+import com.example.mealmate.network.MealsRemoteDataSourceImpl;
+import com.example.mealmate.repo.MealsRepository;
+import com.example.mealmate.ui.home.view.HomeFragmentDirections;
+import com.example.mealmate.ui.search.mainSearch.presenter.SearchPresenter;
+import com.example.mealmate.ui.search.mainSearch.view.adapter.AreaAdapter;
+import com.example.mealmate.ui.search.mainSearch.view.adapter.CategoryAdapter;
+import com.example.mealmate.ui.search.mainSearch.view.adapter.IngredientAdapter;
+import com.example.mealmate.ui.search.mainSearch.view.adapter.OnSearchCardClickListener;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SearchFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class SearchFragment extends Fragment {
+import java.util.List;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class SearchFragment extends Fragment implements ISearchView, OnSearchCardClickListener {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    RecyclerView recyclerView;
+    GridLayoutManager layoutManager;
+    CategoryAdapter categoryAdapter;
+    IngredientAdapter ingredientAdapter;
+    AreaAdapter areaAdapter;
+    EditText etSearch;
+    View view;
+    ChipGroup chipGroup;
+    SearchPresenter presenter;
+    String filterBy;
+
 
     public SearchFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SearchFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SearchFragment newInstance(String param1, String param2) {
-        SearchFragment fragment = new SearchFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false);
+        view = inflater.inflate(R.layout.fragment_search, container, false);
+        presenter = new SearchPresenter(new MealsRepository(MealsRemoteDataSourceImpl.getInstance(), new MealsLocalDataSourceImpl()), this);
+
+
+        recyclerView = view.findViewById(R.id.rv_search);
+        layoutManager = new GridLayoutManager(getActivity(), 2);
+        recyclerView.setLayoutManager(layoutManager);
+
+
+        chipGroup = view.findViewById(R.id.chipGroup);
+        etSearch = view.findViewById(R.id.et_search);
+
+
+        setupFilterChips();
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // Before text changes
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                // While text is changing
+                String text = charSequence.toString();
+                presenter.searchBySection(filterBy,text);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+
+
+        });
+
+
+
+        return view;
+    }
+
+
+
+
+    private void setupFilterChips() {
+        for (int i = 0; i < chipGroup.getChildCount(); i++) {
+            Chip chip = (Chip) chipGroup.getChildAt(i);
+            chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        if (chip.getText().toString().equals("Category")) {
+                            filterBy = "Category";
+                            presenter.getCategories();
+                        } else if (chip.getText().toString().equals("Ingredient")) {
+                            filterBy = "Ingredient";
+                            presenter.getIngredients();
+                        } else {
+                            filterBy = "Area";
+                            presenter.getAreas();
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+
+
+    @Override
+    public void onCardClick(String sectionName, String itemName) {
+
+
+        SearchItem searchItem = new SearchItem(sectionName, itemName);
+        Navigation.findNavController(view).navigate(SearchFragmentDirections.actionSearchFragmentToSectionSearchFragment(searchItem));
+    }
+
+
+    /*    @Override
+    public void onCardClick(String sectionName, String itemName) {
+        if (sectionName.equals("Category")) {
+
+            SearchItem searchItem = new SearchItem(sectionName, itemName);
+            Navigation.findNavController(view).navigate(SearchFragmentDirections.actionSearchFragmentToSectionSearchFragment(searchItem));
+
+        } else if (sectionName.equals("Ingredient")) {
+            SearchItem searchItem = new SearchItem(sectionName, itemName);
+            Navigation.findNavController(view).navigate(SearchFragmentDirections.actionSearchFragmentToSectionSearchFragment(searchItem));
+        } else if (sectionName.equals("Area")) {
+
+        }
+    }*/
+
+    @Override
+    public void showCategoryList(List<CategoryModel> categoryModelList) {
+        categoryAdapter = new CategoryAdapter(getActivity(), categoryModelList, this);
+        recyclerView.setAdapter(categoryAdapter);
+    }
+
+    @Override
+    public void showIngredientsList(List<IngredientModel> ingredientModelList) {
+        ingredientAdapter = new IngredientAdapter(getActivity(), ingredientModelList, this);
+        recyclerView.setAdapter(ingredientAdapter);
+    }
+
+    @Override
+    public void showAreaList(List<AreaModel> areaModelList) {
+        areaAdapter = new AreaAdapter(getActivity(), areaModelList, this);
+        recyclerView.setAdapter(areaAdapter);
+    }
+
+
+    @Override
+    public void showErrMsg(String errorMessage) {
+        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
     }
 }
