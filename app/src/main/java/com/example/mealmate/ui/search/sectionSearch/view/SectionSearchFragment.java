@@ -67,7 +67,7 @@ public class SectionSearchFragment extends Fragment implements ISectionSearchVie
          tvTitle=view.findViewById(R.id.sectionTitle);
          tvTitle.setText(searchItem.getItemName() +"'s Meals");
          ivFavoriteMinusIcon=view.findViewById(R.id.img_fav_minus_icon);
-         ivFavoriteMinusIcon.setVisibility(View.GONE);
+       //  ivFavoriteMinusIcon.setVisibility(View.GONE);
 
          recyclerView = view.findViewById(R.id.mealsRecyclerView);
 

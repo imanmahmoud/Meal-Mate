@@ -72,16 +72,18 @@ public class SearchPresenter {
 
 
     public void searchBySection(String sectionName, String text) {
-        switch (sectionName) {
-            case "Category":
-                filterCategoryList(text);
-                break;
-            case "Ingredient":
-                filterIngredientList(text);
-                break;
-            case "Area":
-                filterAreaList(text);
-                break;
+        if(sectionName!=null && text!=null) {
+            switch (sectionName) {
+                case "Category":
+                    filterCategoryList(text);
+                    break;
+                case "Ingredient":
+                    filterIngredientList(text);
+                    break;
+                case "Area":
+                    filterAreaList(text);
+                    break;
+            }
         }
     }
 
