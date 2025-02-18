@@ -23,11 +23,13 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
 
     private Context context;
     private List<IngredientModel> ingredientModelList;
+    private OnSearchCardClickListener listener;
 
 
-    public IngredientAdapter(Context context, List<IngredientModel> ingredientModelList) {
+    public IngredientAdapter(Context context, List<IngredientModel> ingredientModelList, OnSearchCardClickListener listener) {
         this.context = context;
         this.ingredientModelList = ingredientModelList;
+        this.listener = listener;
     }
 
     public void setList(List<IngredientModel> ingredientModelList){
@@ -57,7 +59,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.My
 
         holder.titleTxt.setText(currentIngredient.getStrIngredient());
         holder.cardView.setOnClickListener(v -> {
-           // listener.onCardClick("ingredient",currentIngredient.getStrIngredient());
+            listener.onCardClick("Ingredient",currentIngredient.getStrIngredient());
 
         });
 

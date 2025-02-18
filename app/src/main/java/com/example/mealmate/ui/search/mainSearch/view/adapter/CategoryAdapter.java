@@ -21,11 +21,13 @@ import java.util.List;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyViewHolder> {
     private Context context;
     private List<CategoryModel> categories;
+    private OnSearchCardClickListener listener;
 
 
-    public CategoryAdapter(Context context, List<CategoryModel> categories) {
+    public CategoryAdapter(Context context, List<CategoryModel> categories , OnSearchCardClickListener listener) {
         this.context = context;
         this.categories = categories;
+        this.listener = listener;
     }
 
     public void setList(List<CategoryModel> categories) {
@@ -55,7 +57,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
 
         holder.titleTxt.setText(currentCategory.getStrCategory());
         holder.cardView.setOnClickListener(v -> {
-            // listener.onCardClick("category",currentCategory.getStrCategory());
+             listener.onCardClick("Category",currentCategory.getStrCategory());
 
         });
     }

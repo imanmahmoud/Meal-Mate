@@ -23,10 +23,12 @@ import java.util.List;
 public class AreaAdapter extends RecyclerView.Adapter<AreaAdapter.MyViewHolder> {
     private Context context;
     private List<AreaModel> areas;
+    private OnSearchCardClickListener listener;
 
-    public AreaAdapter(Context context, List<AreaModel> areas) {
+    public AreaAdapter(Context context, List<AreaModel> areas, OnSearchCardClickListener listener) {
         this.context = context;
         this.areas = areas;
+        this.listener = listener;
     }
 
     public void setList(List<AreaModel> areas){
@@ -56,7 +58,7 @@ public class AreaAdapter extends RecyclerView.Adapter<AreaAdapter.MyViewHolder> 
         // Set text
         holder.titleTxt.setText(currentArea.getStrArea());
         holder.cardView.setOnClickListener(v -> {
-            // listener.onCardClick("area",currentArea.getStrArea());
+             listener.onCardClick("Area",currentArea.getStrArea());
 
         });
 
