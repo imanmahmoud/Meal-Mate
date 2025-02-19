@@ -51,9 +51,9 @@ public class AreaAdapter extends RecyclerView.Adapter<AreaAdapter.MyViewHolder> 
         Glide.with(context)
                 .load(CountryImage.getFlagUrl(currentArea.getStrArea()))
                 .circleCrop()
-                .apply(new RequestOptions().override(200, 200))
+               /* .apply(new RequestOptions().override(200, 200))
                 .placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.ic_launcher_background)
+                .error(R.drawable.ic_launcher_background)*/
                 .into(holder.imageView);
         // Set text
         holder.titleTxt.setText(currentArea.getStrArea());
