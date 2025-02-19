@@ -77,8 +77,8 @@ public class MealInfoFragment extends Fragment implements IMealInfoView {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_meal_info, container, false);
-        presenter = new MealInfoPresenter(new MealsRepository(MealsRemoteDataSourceImpl.getInstance(),  MealsLocalDataSourceImpl.getInstance(getActivity())), this);
-      //  meal=MealInfoFragmentArgs.fromBundle(getArguments()).getMealObject();
+        presenter = new MealInfoPresenter(new MealsRepository(MealsRemoteDataSourceImpl.getInstance(), MealsLocalDataSourceImpl.getInstance(getActivity())), this, requireContext());
+        //  meal=MealInfoFragmentArgs.fromBundle(getArguments()).getMealObject();
         String mealId = MealInfoFragmentArgs.fromBundle(getArguments()).getMealObject().getIdMeal();
 
         //close at network error
@@ -86,10 +86,18 @@ public class MealInfoFragment extends Fragment implements IMealInfoView {
 
         ibFavorite = view.findViewById(R.id.favorite_icon);
         ibPlan = view.findViewById(R.id.calendar_icon);
-        ibPlan.setOnClickListener(v -> showDatePicker());
+        ibPlan.setOnClickListener(v -> {
+            if (SharedPref.getInstance(requireContext()).isLogged()) {
+                showDatePicker();
+            } else {
+                Toast.makeText(getContext(), "This feature is not available in guest mode", Toast.LENGTH_SHORT).show();
+            }
+
+
+        });
 
         recyclerView = view.findViewById(R.id.ingredients_recycler);
-        // GridLayoutManager layoutManager=new GridLayoutManager();
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setHasFixedSize(true);
 
@@ -122,8 +130,6 @@ public class MealInfoFragment extends Fragment implements IMealInfoView {
         planMeal.mealId=meal.getIdMeal();
         planMeal.uId=SharedPref.getInstance(getActivity()).getUSERID();
 
-
-
         Glide.with(getActivity())
                 .load(meal.getStrMealThumb())//.circleCrop()
                /* .apply(new RequestOptions().override(100, 100))*/
@@ -154,22 +160,22 @@ public class MealInfoFragment extends Fragment implements IMealInfoView {
     private  void showDatePicker(){
             Calendar calendar = Calendar.getInstance();
 
-            // Get the start of the current week (Monday)
-            calendar.set(Calendar.DAY_OF_WEEK,calendar.get(Calendar.DAY_OF_WEEK));
+
+        calendar.set(Calendar.DAY_OF_WEEK,calendar.get(Calendar.DAY_OF_WEEK));
             long startOfWeek = calendar.getTimeInMillis();
 
-            // Get the end of the current week (Sunday)
-            calendar.add(Calendar.DAY_OF_WEEK, 6);
+
+        calendar.add(Calendar.DAY_OF_WEEK, 6);
             long endOfWeek = calendar.getTimeInMillis();
 
-            // Reset to today’s date for default selection
-            calendar.setTimeInMillis(System.currentTimeMillis());
+
+        calendar.setTimeInMillis(System.currentTimeMillis());
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-            // Show DatePickerDialog
-            DatePickerDialog datePickerDialog = new DatePickerDialog(
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
                     getActivity(),
                     (view, selectedYear, selectedMonth, selectedDay) -> {
                         Calendar selectedCalendar = Calendar.getInstance();
@@ -184,7 +190,6 @@ public class MealInfoFragment extends Fragment implements IMealInfoView {
             );
 
 
-            // Set min and max dates (restrict to the current week)
             datePickerDialog.getDatePicker().setMinDate(startOfWeek);
             datePickerDialog.getDatePicker().setMaxDate(endOfWeek);
             datePickerDialog.show();}

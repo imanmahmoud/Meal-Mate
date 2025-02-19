@@ -1,6 +1,9 @@
 package com.example.mealmate.ui.mealDetails.presenter;
 
+import android.content.Context;
+
 import com.example.mealmate.model.meal.MealModel;
+import com.example.mealmate.repo.SharedPref;
 import com.example.mealmate.ui.mealDetails.view.IMealInfoView;
 import com.example.mealmate.repo.MealsRepository;
 import com.example.mealmate.ui.plan.model.PlanMealModel;
@@ -12,10 +15,15 @@ public class MealInfoPresenter {
 
     private IMealInfoView view;
     private MealsRepository repo;
+    Context context;
 
-    public MealInfoPresenter(MealsRepository repo, IMealInfoView view) {
+    SharedPref sharedPref;
+
+    public MealInfoPresenter(MealsRepository repo, IMealInfoView view, Context context) {
         this.view = view;
         this.repo = repo;
+        this.context = context;
+        sharedPref = SharedPref.getInstance(context);
     }
 
     public void getMealInfo(String mealId) {
@@ -44,28 +52,36 @@ public class MealInfoPresenter {
     }
 
     public void addToFavorite(MealModel meal) {
-        if(!meal.isFav){
-            repo.insertMealToFav(meal)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                            () -> {view.showMessage("Added to favorite");
-                                meal.setFav(true);},
-                            error -> view.showMessage(error.getMessage()));
-        }else{
-            view.showMessage("Already in favorite");
+        if (sharedPref.isLogged()) {
+            if (!meal.isFav) {
+                repo.insertMealToFav(meal)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                () -> {
+                                    view.showMessage("Added to favorite");
+                                    meal.setFav(true);
+                                },
+                                error -> view.showMessage(error.getMessage()));
+            } else {
+                view.showMessage("Already in favorite");
+            }
+        } else {
+            view.showMessage("This feature is not available in guest mode");
         }
 
 
     }
 
     public void addToPlan(PlanMealModel meal) {
+
         repo.insertMealToPlan(meal)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         () -> view.showMessage("Added to plan"),
                         error -> view.showMessage(error.getMessage()));
+
     }
 
 
