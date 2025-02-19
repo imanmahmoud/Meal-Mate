@@ -7,6 +7,7 @@ import com.example.mealmate.model.ingredient.IngredientResponse;
 import com.example.mealmate.model.meal.MealModel;
 import com.example.mealmate.model.meal.MealResponse;
 import com.example.mealmate.network.MealsRemoteDataSourceImpl;
+import com.example.mealmate.ui.plan.model.PlanMealModel;
 
 import java.util.List;
 
@@ -58,6 +59,15 @@ public class MealsRepository {
     }
     public Completable deleteMealFromFav(MealModel mealModel) {
         return localDataSource.deleteMealFromFav(mealModel);
+    }
+    public Observable<List<PlanMealModel>> getAllplanMeals(String uId, String datee) {
+        return localDataSource.getAllplanMeals(uId, datee);
+    }
+    public Completable insertMealToPlan(PlanMealModel mealModel) {
+        return localDataSource.insertMealToPlan(mealModel);
+    }
+    public Completable deleteMealFromPlan(PlanMealModel mealModel) {
+        return localDataSource.deleteMealFromPlan(mealModel);
     }
 
 

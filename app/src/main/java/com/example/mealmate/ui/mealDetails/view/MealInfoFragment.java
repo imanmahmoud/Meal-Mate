@@ -1,5 +1,6 @@
 package com.example.mealmate.ui.mealDetails.view;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -30,10 +31,14 @@ import com.example.mealmate.ui.mealDetails.presenter.MealInfoPresenter;
 import com.example.mealmate.model.meal.MealModel;
 import com.example.mealmate.network.MealsRemoteDataSourceImpl;
 import com.example.mealmate.repo.MealsRepository;
+import com.example.mealmate.ui.plan.model.PlanMealModel;
 import com.example.mealmate.utils.CustomeSnakeBar;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class MealInfoFragment extends Fragment implements IMealInfoView {
     MealInfoPresenter presenter;
@@ -50,6 +55,7 @@ public class MealInfoFragment extends Fragment implements IMealInfoView {
 
     RecyclerView recyclerView;
     private ItemAdapter ingredientsAdapter;
+    PlanMealModel planMeal=new PlanMealModel();
 
 
 
@@ -71,6 +77,7 @@ public class MealInfoFragment extends Fragment implements IMealInfoView {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_meal_info, container, false);
         presenter = new MealInfoPresenter(new MealsRepository(MealsRemoteDataSourceImpl.getInstance(),  MealsLocalDataSourceImpl.getInstance(getActivity())), this);
+      //  meal=MealInfoFragmentArgs.fromBundle(getArguments()).getMealObject();
         String mealId = MealInfoFragmentArgs.fromBundle(getArguments()).getMealObject().getIdMeal();
 
         //close at network error
@@ -78,6 +85,7 @@ public class MealInfoFragment extends Fragment implements IMealInfoView {
 
         ibFavorite = view.findViewById(R.id.favorite_icon);
         ibPlan = view.findViewById(R.id.calendar_icon);
+        ibPlan.setOnClickListener(v -> showDatePicker());
 
         recyclerView = view.findViewById(R.id.ingredients_recycler);
         // GridLayoutManager layoutManager=new GridLayoutManager();
@@ -107,10 +115,14 @@ public class MealInfoFragment extends Fragment implements IMealInfoView {
 
     @Override
     public void showData(MealModel mealModel, String embeddedVideoUrl) {
-      // CustomeSnakeBar.showCustomSnackbar(recyclerView, "Success", getActivity());
-
-
         meal = mealModel;
+      // CustomeSnakeBar.showCustomSnackbar(recyclerView, "Success", getActivity());
+        planMeal.mealModel = meal;
+        planMeal.mealId=meal.getIdMeal();
+        planMeal.uId=SharedPref.getInstance(getActivity()).getUSERID();
+
+
+
         Glide.with(getActivity())
                 .load(meal.getStrMealThumb())//.circleCrop()
                /* .apply(new RequestOptions().override(100, 100))*/
@@ -137,6 +149,46 @@ public class MealInfoFragment extends Fragment implements IMealInfoView {
     }
 
 
+    private  void showDatePicker(){
+            Calendar calendar = Calendar.getInstance();
+
+            // Get the start of the current week (Monday)
+            calendar.set(Calendar.DAY_OF_WEEK,calendar.get(Calendar.DAY_OF_WEEK));
+            long startOfWeek = calendar.getTimeInMillis();
+
+            // Get the end of the current week (Sunday)
+            calendar.add(Calendar.DAY_OF_WEEK, 6);
+            long endOfWeek = calendar.getTimeInMillis();
+
+            // Reset to today’s date for default selection
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            // Show DatePickerDialog
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    getActivity(),
+                    (view, selectedYear, selectedMonth, selectedDay) -> {
+                        Calendar selectedCalendar = Calendar.getInstance();
+                        selectedCalendar.set(selectedYear, selectedMonth, selectedDay);
+                        SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM", Locale.getDefault());
+                        String selectedDate = sdf.format(selectedCalendar.getTime());
+
+                        planMeal.setDate(selectedDate);
+                        presenter.addToPlan(planMeal);
+                    },
+                    year, month, day
+            );
 
 
-}
+            // Set min and max dates (restrict to the current week)
+            datePickerDialog.getDatePicker().setMinDate(startOfWeek);
+            datePickerDialog.getDatePicker().setMaxDate(endOfWeek);
+            datePickerDialog.show();}
+
+   }
+
+
+
+

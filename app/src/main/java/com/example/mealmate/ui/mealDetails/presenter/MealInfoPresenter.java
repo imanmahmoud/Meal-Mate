@@ -3,6 +3,7 @@ package com.example.mealmate.ui.mealDetails.presenter;
 import com.example.mealmate.model.meal.MealModel;
 import com.example.mealmate.ui.mealDetails.view.IMealInfoView;
 import com.example.mealmate.repo.MealsRepository;
+import com.example.mealmate.ui.plan.model.PlanMealModel;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -56,6 +57,15 @@ public class MealInfoPresenter {
         }
 
 
+    }
+
+    public void addToPlan(PlanMealModel meal) {
+        repo.insertMealToPlan(meal)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        () -> view.showMessage("Added to plan"),
+                        error -> view.showMessage(error.getMessage()));
     }
 
 
