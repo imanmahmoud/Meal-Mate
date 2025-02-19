@@ -1,5 +1,6 @@
 package com.example.mealmate.utils;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -49,4 +50,6 @@ public class CustomeSnakeBar {
 
         snackbar.show();
     }
+
+
 }

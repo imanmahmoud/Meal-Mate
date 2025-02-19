@@ -17,10 +17,15 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.mealmate.repo.SharedPref;
+import com.example.mealmate.ui.Auth.firebaseAuth.GoogleAuthService;
 import com.example.mealmate.ui.Auth.presenter.LoginPresenter;
 import com.example.mealmate.MainActivity;
 import com.example.mealmate.R;
 import com.example.mealmate.utils.CustomeSnakeBar;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -36,6 +41,11 @@ public class Login extends Fragment implements ILoginView {
     private TextInputLayout emailInputLayout;
     private TextInputLayout passwordInputLayout;
     private Button btnSkip;
+
+    GoogleAuthService googleAuthService;
+
+    Button btnGoogleSignIn;
+
 
 
 
@@ -60,10 +70,16 @@ public class Login extends Fragment implements ILoginView {
         presenter = new LoginPresenter(this,getActivity());
         progressDialog = new ProgressDialog(getContext());
 
+        googleAuthService=new GoogleAuthService(requireContext());
+
         emailInputLayout = view.findViewById(R.id.emailInputLayout);
         passwordInputLayout = view.findViewById(R.id.passwordInputLayout);
         loginButton = view.findViewById(R.id.btnLogin);
         btnSkip=view.findViewById(R.id.btn_skip);
+        btnGoogleSignIn=view.findViewById(R.id.btnGoogleSignIn);
+        btnGoogleSignIn.setOnClickListener(v -> {
+           googleAuthService.signIn(this);
+        });
 
 
         etEmail = view.findViewById(R.id.etEmail);
@@ -71,8 +87,10 @@ public class Login extends Fragment implements ILoginView {
 
         btnSkip.setOnClickListener(v -> {
             SharedPref.getInstance(getActivity()).setLogged(false);
+            SharedPref.getInstance(getActivity()).setUSERID(null);
            Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
+            getActivity().finish();
         });
 
         etEmail.addTextChangedListener(new TextWatcher() {
@@ -181,4 +199,20 @@ public class Login extends Fragment implements ILoginView {
         }
 
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 100) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // Google Sign-In successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                presenter.firebaseAuthWithGoogle(account.getIdToken());
+            } catch (ApiException e) {
+                Toast.makeText(getActivity(), "Google Sign-In failed!", Toast.LENGTH_SHORT).show();
+            }
+}
+}
 }

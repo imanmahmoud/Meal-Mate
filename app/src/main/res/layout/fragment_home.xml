@@ -130,5 +130,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/darkOrange" />
+    
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/main_group"
+        app:constraint_referenced_ids="tv_meal_header,tv_today_meal,card_random_meal,tv_lazy_meals_header,rv_meals,ic_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie_animation"
+        app:lottie_rawRes="@raw/connection"
+        app:lottie_autoPlay="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

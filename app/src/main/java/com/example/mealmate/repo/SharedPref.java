@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 public class SharedPref {
     SharedPreferences sharedPreferences;
-    private  static SharedPref instance;
+    private  static SharedPref instance=null;
     final static  String FILENAME ="sharedPrefFile";
     SharedPreferences.Editor editor;
     public final String IS_LOGGED="isLogged";

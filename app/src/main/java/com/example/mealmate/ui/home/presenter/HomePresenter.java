@@ -2,10 +2,15 @@ package com.example.mealmate.ui.home.presenter;
 
 import android.content.Context;
 
+import com.example.mealmate.R;
 import com.example.mealmate.repo.SharedPref;
 import com.example.mealmate.ui.Auth.firebaseAuth.FirebaseAuthHelper;
 import com.example.mealmate.ui.home.view.IHomeView;
 import com.example.mealmate.repo.MealsRepository;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -41,6 +46,13 @@ public class HomePresenter {
     }
 
     public void logout() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken("264734462193-sulg8qi7l15fepo8j1hn4h3gli339jiq.apps.googleusercontent.com") // Get Web Client ID from Firebase
+                .requestEmail()
+                .build();
+        GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(FirebaseApp.getInstance().getApplicationContext(), gso);
+        googleSignInClient.signOut();
+
        authHelper.logout();
       sharedPref.setLogged(false);
         view.onLogout();

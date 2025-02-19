@@ -78,4 +78,19 @@
         android:clipToPadding="false"
         tools:listitem="@layout/search_item"
         android:paddingBottom="16dp"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/search_group"
+        app:constraint_referenced_ids="et_search,chipGroup,rv_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie_search_animation"
+        app:lottie_rawRes="@raw/connection"
+        app:lottie_autoPlay="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

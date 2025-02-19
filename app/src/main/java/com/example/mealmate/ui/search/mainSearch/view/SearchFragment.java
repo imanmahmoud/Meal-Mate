@@ -10,11 +10,13 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.mealmate.R;
 import com.example.mealmate.db.MealsLocalDataSourceImpl;
 import com.example.mealmate.model.Area.AreaModel;
@@ -29,12 +31,14 @@ import com.example.mealmate.ui.search.mainSearch.view.adapter.AreaAdapter;
 import com.example.mealmate.ui.search.mainSearch.view.adapter.CategoryAdapter;
 import com.example.mealmate.ui.search.mainSearch.view.adapter.IngredientAdapter;
 import com.example.mealmate.ui.search.mainSearch.view.adapter.OnSearchCardClickListener;
+import com.example.mealmate.utils.networkConnection.NetworkResponse;
+import com.example.mealmate.utils.networkConnection.NetworkUtils;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
 import java.util.List;
 
-public class SearchFragment extends Fragment implements ISearchView, OnSearchCardClickListener {
+public class SearchFragment extends Fragment implements ISearchView, OnSearchCardClickListener, NetworkResponse {
 
     RecyclerView recyclerView;
     GridLayoutManager layoutManager;
@@ -46,6 +50,8 @@ public class SearchFragment extends Fragment implements ISearchView, OnSearchCar
     ChipGroup chipGroup;
     SearchPresenter presenter;
     String filterBy;
+    Group group;
+    LottieAnimationView lottieAnimationView;
 
 
     public SearchFragment() {
@@ -74,6 +80,20 @@ public class SearchFragment extends Fragment implements ISearchView, OnSearchCar
 
         chipGroup = view.findViewById(R.id.chipGroup);
         etSearch = view.findViewById(R.id.et_search);
+
+        group = view.findViewById(R.id.search_group);
+        lottieAnimationView = view.findViewById(R.id.lottie_search_animation);
+
+
+        if(NetworkUtils.isInternetAvailable(getActivity())) {
+            onNetworkConncted();
+            NetworkUtils.registerNetworkCallback(getActivity(), this);
+        }else {
+            onNetworkDisconnected();
+            NetworkUtils.registerNetworkCallback(getActivity(), this);
+        }
+
+
 
 
         setupFilterChips();
@@ -177,5 +197,18 @@ public class SearchFragment extends Fragment implements ISearchView, OnSearchCar
     @Override
     public void showErrMsg(String errorMessage) {
         Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNetworkConncted() {
+        group.setVisibility(View.VISIBLE);
+        lottieAnimationView.setVisibility(View.GONE);
+
+    }
+
+    @Override
+    public void onNetworkDisconnected() {
+        group.setVisibility(View.GONE);
+        lottieAnimationView.setVisibility(View.VISIBLE);
     }
 }
