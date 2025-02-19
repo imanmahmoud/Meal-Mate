@@ -14,6 +14,7 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -22,6 +23,9 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.mealmate.AuthActivity;
 import com.example.mealmate.R;
 import com.example.mealmate.db.MealsLocalDataSourceImpl;
+import com.example.mealmate.repo.SharedPref;
+import com.example.mealmate.ui.adapter.MealAdapter;
+import com.example.mealmate.ui.adapter.OnMealClickListener;
 import com.example.mealmate.ui.home.presenter.HomePresenter;
 import com.example.mealmate.model.meal.MealModel;
 import com.example.mealmate.network.MealsRemoteDataSourceImpl;
@@ -34,21 +38,25 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.FirebaseApp;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public class HomeFragment extends Fragment implements IHomeView, NetworkResponse {
+
+public class HomeFragment extends Fragment implements IHomeView, NetworkResponse, OnMealClickListener {
 
     ImageView mealImage;
     TextView mealName;
     TextView mealDescription;
     CardView cvMeal;
     HomePresenter presenter;
-    private RecyclerView recyclerView;
+    RecyclerView recyclerView;
 
-    ImageView ivLogout;
+    TextView ivLogout;
 
     MealModel meal;
-
+    View view;
     Group group;
+    MealAdapter myAdapter;
     LottieAnimationView lottieAnimationView;
 
 
@@ -69,20 +77,28 @@ public class HomeFragment extends Fragment implements IHomeView, NetworkResponse
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-
+        view = inflater.inflate(R.layout.fragment_home, container, false);
 
 
         ivLogout = view.findViewById(R.id.ic_logout);
         group = view.findViewById(R.id.main_group);
         lottieAnimationView = view.findViewById(R.id.lottie_animation);
 
+        recyclerView = view.findViewById(R.id.rv_meals);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setHasFixedSize(true);
+
+        myAdapter = new MealAdapter(getActivity(), new ArrayList<>(), this, false);
+        recyclerView.setAdapter(myAdapter);
+
         mealImage = view.findViewById(R.id.iv_random_meal);
         mealName = view.findViewById(R.id.tv_meal_title);
         mealDescription = view.findViewById(R.id.tv_meal_description);
         cvMeal = view.findViewById(R.id.card_random_meal);
 
-        presenter = new HomePresenter(new MealsRepository(MealsRemoteDataSourceImpl.getInstance(),MealsLocalDataSourceImpl.getInstance(getActivity())), this,getActivity());
+        presenter = new HomePresenter(new MealsRepository(MealsRemoteDataSourceImpl.getInstance(), MealsLocalDataSourceImpl.getInstance(getActivity())), this, getActivity());
+
 
 
         if(NetworkUtils.isInternetAvailable(getActivity())) {
@@ -95,16 +111,29 @@ public class HomeFragment extends Fragment implements IHomeView, NetworkResponse
 
 
         cvMeal.setOnClickListener(v -> {
-           // Navigation.findNavController(view).navigate(R.id.action_homeFragment2_to_mealInfoFragment);
+            // Navigation.findNavController(view).navigate(R.id.action_homeFragment2_to_mealInfoFragment);
 
             HomeFragmentDirections.ActionHomeFragment2ToMealInfoFragment action = HomeFragmentDirections.actionHomeFragment2ToMealInfoFragment(meal);
             Navigation.findNavController(v).navigate(action);
         });
 
-        ivLogout.setOnClickListener(v -> {
-            showLogoutDialog();
+        if (SharedPref.getInstance(requireContext()).isLogged()) {
+            ivLogout.setText("Logout");
+        } else {
+            ivLogout.setText("Login");
+        }
 
-          /* presenter.logout();*/
+
+        ivLogout.setOnClickListener(v -> {
+            if (SharedPref.getInstance(requireContext()).isLogged()) {
+                showLogoutDialog();
+            } else {
+                Intent intent = new Intent(getActivity(), AuthActivity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+
+            /* presenter.logout();*/
         });
 
         return view;
@@ -115,14 +144,16 @@ public class HomeFragment extends Fragment implements IHomeView, NetworkResponse
     public void showData(MealModel mealModel) {
         meal = mealModel;
         Glide.with(getActivity())
-                .load(meal.getStrMealThumb())//.circleCrop()
-                /*.apply(new RequestOptions().override(100, 100))*/
-                /*.placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.ic_launcher_background)*/
+                .load(meal.getStrMealThumb())
                 .into(mealImage);
         mealName.setText(meal.getStrMeal());
         mealDescription.setText(meal.getStrInstructions());
 
+    }
+
+    @Override
+    public void showMeals(List<MealModel> mealList) {
+        myAdapter.setList(mealList);
     }
 
     @Override
@@ -132,8 +163,6 @@ public class HomeFragment extends Fragment implements IHomeView, NetworkResponse
 
     @Override
     public void onLogout() {
-
-
 
         Intent intent = new Intent(getActivity(), AuthActivity.class);
         startActivity(intent);
@@ -145,6 +174,7 @@ public class HomeFragment extends Fragment implements IHomeView, NetworkResponse
         group.setVisibility(View.VISIBLE);
         lottieAnimationView.setVisibility(View.GONE);
         presenter.getRandomMeal();
+        presenter.getMealsByArea();
     }
 
     @Override
@@ -160,5 +190,16 @@ public class HomeFragment extends Fragment implements IHomeView, NetworkResponse
                 .setPositiveButton("Yes", (dialog, which) -> presenter.logout())
                 .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
                 .show();
+    }
+
+    @Override
+    public void onMealClick(MealModel mealModel) {
+        HomeFragmentDirections.ActionHomeFragment2ToMealInfoFragment action = HomeFragmentDirections.actionHomeFragment2ToMealInfoFragment(meal);
+        Navigation.findNavController(view).navigate(action);
+    }
+
+    @Override
+    public void onFavMinusClick(MealModel mealModel) {
+        //not needed
     }
 }

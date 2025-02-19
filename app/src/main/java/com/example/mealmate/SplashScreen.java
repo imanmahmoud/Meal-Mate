@@ -18,7 +18,6 @@ import com.example.mealmate.repo.SharedPref;
 public class SplashScreen extends Fragment {
 
 
-
     public SplashScreen() {
         // Required empty public constructor
     }

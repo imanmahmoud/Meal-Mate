@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.mealmate.R;
 import com.example.mealmate.db.MealsLocalDataSourceImpl;
@@ -99,8 +100,9 @@ public class PlanFragment extends Fragment implements IPlanFragmentView, OnDateC
     }
 
     @Override
-    public void ShowMsg(String msg) {
-        CustomeSnakeBar.showCustomSnackbar(mealRecyclerView, msg, getActivity());
+    public void ShowMsg(String message) {
+        // CustomeSnakeBar.showCustomSnackbar(mealRecyclerView, msg, getActivity());
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

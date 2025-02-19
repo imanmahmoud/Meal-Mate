@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.mealmate.R;
 import com.example.mealmate.db.MealsLocalDataSourceImpl;
@@ -76,8 +77,9 @@ public class FavoriteFragment extends Fragment implements IFavoriteView, OnMealC
     }
 
     @Override
-    public void ShowMsg(String Message) {
-        CustomeSnakeBar.showCustomSnackbar(view, Message,getActivity());
+    public void ShowMsg(String message) {
+        //CustomeSnakeBar.showCustomSnackbar(view, Message,getActivity());
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -45,6 +45,20 @@ public class HomePresenter {
                 );
     }
 
+
+    public void getMealsByArea() {
+        mealsRepository.getMealsByArea("Egyptian")
+                .subscribeOn(Schedulers.io())
+                .map(mealResponse -> mealResponse.getMeals())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        list -> {
+                            view.showMeals(list);
+                        },
+                        throwable -> view.showError(throwable.getMessage())
+                );
+    }
+
     public void logout() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("264734462193-sulg8qi7l15fepo8j1hn4h3gli339jiq.apps.googleusercontent.com") // Get Web Client ID from Firebase
@@ -53,7 +67,7 @@ public class HomePresenter {
         GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(FirebaseApp.getInstance().getApplicationContext(), gso);
         googleSignInClient.signOut();
 
-       authHelper.logout();
+        authHelper.logout();
       sharedPref.setLogged(false);
         view.onLogout();
 

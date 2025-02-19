@@ -160,11 +160,11 @@ public class Login extends Fragment implements ILoginView {
     @Override
     public void onLoginSuccess(Object result) {
 
-        CustomeSnakeBar.showCustomSnackbar(getView(), "Login Success", getActivity());
+      //  CustomeSnakeBar.showCustomSnackbar(getView(), "Login Success", getActivity());
 
         Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
-        // Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
        /* progressDialog.setMessage("Success");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -175,9 +175,9 @@ public class Login extends Fragment implements ILoginView {
 
     @Override
     public void onLoginFailure(String errorMessage) {
-        CustomeSnakeBar.showCustomSnackbar(getView(), errorMessage, getActivity());
+        // CustomeSnakeBar.showCustomSnackbar(getView(), errorMessage, getActivity());
 
-        // Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
        /* progressDialog.setMessage("failed");
         progressDialog.setCancelable(false); // Prevent dismissing by tapping outside
         progressDialog.show();
@@ -207,7 +207,7 @@ public class Login extends Fragment implements ILoginView {
         if (requestCode == 100) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
-                // Google Sign-In successful, authenticate with Firebase
+
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 presenter.firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
