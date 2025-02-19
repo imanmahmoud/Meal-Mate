@@ -1,3 +1,46 @@
 <resources>
     <string name="app_name">MealMate</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="welcome_back_to_the_app">Welcome back to the app</string>
+    <string name="login">Login</string>
+    <string name="email_address">Email Address</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="skip">Skip</string>
+    <string name="enter_your_email_address">enter your email address</string>
+    <string name="enter_your_password">enter your password</string>
+    <string name="signup">Sign up</string>
+    <string name="full_name">enter your full name</string>
+    <string name="name">Full Name</string>
+    <string name="or">or</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="tvSignIn">Sign in</string>
+    <string name="meal_name">Meal Name</string>
+    <string name="discover">Discover</string>
+    <string name="your_daily_inspiration_of_recipe">Your daily inspirations of recipe:</string>
+    <string name="another_suggestions">Another Suggestions</string>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="favorite">Favorite</string>
+    <string name="plan">Plan</string>
+    <string name="calendar">Calendar</string>
+    <string name="sticky_toffee_pudding_ultimate">Sticky Toffee Pudding Ultimate</string>
+    <string name="dessert">Dessert</string>
+    <string name="british">British</string>
+    <string name="ingredients">Ingredients:</string>
+    <string name="instructions">Instructions:</string>
+    <string name="step_by_step_instructions_go_here">Step-by-step instructions go here.</string>
+    <string name="youtube">YouTube:</string>
+    <string name="ingredient">Ingredient</string>
+    <string name="category">Category</string>
+    <string name="country">Country</string>
+    <string name="beef_meals">Beef Meals</string>
+    <string name="your_favourites">Your Favourites:</string>
+    <string name="thu_20_feb">Thu, 20 Feb</string>
+    <string name="your_weekly_plan">Your Weekly Plan</string>
+    <string name="default_web_client_id">264734462193-sulg8qi7l15fepo8j1hn4h3gli339jiq.apps.googleusercontent.com</string>
+    <string name="logout">LogOut</string>
 </resources>

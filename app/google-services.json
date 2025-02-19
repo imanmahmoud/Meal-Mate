@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "264734462193",
+    "project_id": "meal-mate-db4df",
+    "storage_bucket": "meal-mate-db4df.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:264734462193:android:53d9eac7e08dbff3f21950",
+        "android_client_info": {
+          "package_name": "com.example.mealmate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "264734462193-sulg8qi7l15fepo8j1hn4h3gli339jiq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mealmate",
+            "certificate_hash": "16fc56a08170743908bb6a50488c1fcf8832bf5d"
+          }
+        },
+        {
+          "client_id": "264734462193-vetcd3cfqbtetdvaaqgbamr953euc28t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBf68jK6iyqAnTbohCft04TAFTaOLtUWVc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "264734462193-vetcd3cfqbtetdvaaqgbamr953euc28t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

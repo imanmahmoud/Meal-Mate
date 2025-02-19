@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/homeFragment2">
+
+    <fragment
+        android:id="@+id/homeFragment2"
+        android:name="com.example.mealmate.ui.home.view.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment2_to_mealInfoFragment"
+            app:destination="@id/mealInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.example.mealmate.ui.favorite.view.FavoriteFragment"
+        android:label="fragment_favorite"
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_favoriteFragment_to_mealInfoFragment"
+            app:destination="@id/mealInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/planFragment"
+        android:name="com.example.mealmate.ui.plan.view.PlanFragment"
+        android:label="fragment_plan"
+        tools:layout="@layout/fragment_plan" >
+        <action
+            android:id="@+id/action_planFragment_to_mealInfoFragment"
+            app:destination="@id/mealInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.mealmate.ui.search.mainSearch.view.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_sectionSearchFragment"
+            app:destination="@id/sectionSearchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mealInfoFragment"
+        android:name="com.example.mealmate.ui.mealDetails.view.MealInfoFragment"
+        android:label="fragment_meal_info"
+        tools:layout="@layout/fragment_meal_info" >
+        <argument
+            android:name="MealObject"
+            app:argType="com.example.mealmate.model.meal.MealModel" />
+    </fragment>
+    <fragment
+        android:id="@+id/sectionSearchFragment"
+        android:name="com.example.mealmate.ui.search.sectionSearch.view.SectionSearchFragment"
+        android:label="fragment_section_search"
+        tools:layout="@layout/fragment_section_search" >
+        <argument
+            android:name="searchItem"
+            app:argType="com.example.mealmate.model.SearchItem" />
+        <action
+            android:id="@+id/action_sectionSearchFragment_to_mealInfoFragment"
+            app:destination="@id/mealInfoFragment" />
+    </fragment>
+</navigation>
