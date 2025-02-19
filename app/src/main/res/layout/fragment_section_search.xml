@@ -18,6 +18,7 @@
         android:drawableStart="@drawable/ic_search"
         android:padding="12dp"
         android:textSize="16sp"
+        android:textColor="@color/black"
         android:inputType="text"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"

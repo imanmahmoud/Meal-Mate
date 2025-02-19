@@ -1,5 +1,6 @@
 package com.example.mealmate.ui.home.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.mealmate.AuthActivity;
 import com.example.mealmate.R;
 import com.example.mealmate.db.MealsLocalDataSourceImpl;
 import com.example.mealmate.ui.home.presenter.HomePresenter;
@@ -32,6 +34,8 @@ public class HomeFragment extends Fragment implements IHomeView {
     CardView cvMeal;
     HomePresenter presenter;
     private RecyclerView recyclerView;
+
+    ImageView ivLogout;
 
     MealModel meal;
 
@@ -55,8 +59,10 @@ public class HomeFragment extends Fragment implements IHomeView {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        presenter = new HomePresenter(new MealsRepository(MealsRemoteDataSourceImpl.getInstance(),MealsLocalDataSourceImpl.getInstance(getActivity())), this);
+        presenter = new HomePresenter(new MealsRepository(MealsRemoteDataSourceImpl.getInstance(),MealsLocalDataSourceImpl.getInstance(getActivity())), this,getActivity());
         presenter.getRandomMeal();
+
+        ivLogout = view.findViewById(R.id.ic_logout);
 
         mealImage = view.findViewById(R.id.iv_random_meal);
         mealName = view.findViewById(R.id.tv_meal_title);
@@ -69,6 +75,9 @@ public class HomeFragment extends Fragment implements IHomeView {
             Navigation.findNavController(v).navigate(action);
         });
 
+        ivLogout.setOnClickListener(v -> {
+           presenter.logout();
+        });
 
         return view;
 
@@ -91,5 +100,11 @@ public class HomeFragment extends Fragment implements IHomeView {
     @Override
     public void showError(String message) {
         CustomeSnakeBar.showCustomSnackbar(recyclerView, message, getActivity());
+    }
+
+    @Override
+    public void onLogout() {
+        Intent intent = new Intent(getActivity(), AuthActivity.class);
+        startActivity(intent);
     }
 }
