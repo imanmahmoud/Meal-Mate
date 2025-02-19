@@ -24,7 +24,7 @@
         android:id="@+id/tv_today_meal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="6dp"
         android:text="@string/your_daily_inspiration_of_recipe"
         android:textColor="#000000"
         android:textSize="18sp"
@@ -36,7 +36,7 @@
         android:id="@+id/card_random_meal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="12dp"
         android:backgroundTint="@color/orangeOpacity"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
@@ -101,7 +101,7 @@
         android:id="@+id/tv_lazy_meals_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:text="@string/another_suggestions"
         android:textColor="@color/primary"
         android:textSize="24sp"
@@ -122,14 +122,16 @@
         app:layout_constraintTop_toBottomOf="@id/tv_lazy_meals_header"
         tools:listitem="@layout/item_meal" />
 
-    <ImageView
+    <TextView
         android:id="@+id/ic_logout"
-        android:layout_width="42dp"
-        android:layout_height="53dp"
-        android:src="@drawable/ic_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/logout"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@color/darkOrange"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/darkOrange" />
+        app:layout_constraintTop_toTopOf="parent" />
     
     <androidx.constraintlayout.widget.Group
         android:id="@+id/main_group"

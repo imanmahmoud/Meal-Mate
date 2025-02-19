@@ -42,4 +42,5 @@
     <string name="thu_20_feb">Thu, 20 Feb</string>
     <string name="your_weekly_plan">Your Weekly Plan</string>
     <string name="default_web_client_id">264734462193-sulg8qi7l15fepo8j1hn4h3gli339jiq.apps.googleusercontent.com</string>
+    <string name="logout">LogOut</string>
 </resources>

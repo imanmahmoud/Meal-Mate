@@ -51,10 +51,10 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MyViewHolder> 
 
         Glide.with(context)
                 .load(currentMeal.getStrMealThumb())
-                .circleCrop()
+                /*.circleCrop()*/
 //                .apply(new RequestOptions().override(200, 200))
-                .placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.ic_launcher_background)
+                /*.placeholder(R.drawable.ic_launcher_background)
+                .error(R.drawable.ic_launcher_background)*/
                 .into(holder.imageView);
 
         holder.titleTxt.setText(currentMeal.getStrMeal());

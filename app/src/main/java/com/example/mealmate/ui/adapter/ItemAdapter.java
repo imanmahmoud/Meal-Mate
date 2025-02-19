@@ -6,10 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.mealmate.R;
 
 import java.util.List;
@@ -23,8 +24,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
         this.ingredients = ingredients;
     }
 
-    public void setList(List<String> ingredients){
-        this.ingredients=ingredients;
+    public void setList(List<String> ingredients) {
+        this.ingredients = ingredients;
         notifyDataSetChanged();
     }
 
@@ -43,9 +44,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.MyViewHolder> 
         Glide.with(context)
                 .load("https://www.themealdb.com/images/ingredients/" + current + ".png")
                 .circleCrop()
-//                .apply(new RequestOptions().override(200, 200))
-                .placeholder(R.drawable.ic_launcher_background)
-                        .error(R.drawable.ic_launcher_background)
+//
                 .into(holder.imageView);
         // Set text
         holder.titleTxt.setText(current);

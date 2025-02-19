@@ -152,11 +152,11 @@ public class SignUp extends Fragment implements ISignupView {
 
     @Override
     public void onSignupSuccess(Object result) {
-        CustomeSnakeBar.showCustomSnackbar(getView(), "Success", getActivity());
+       // CustomeSnakeBar.showCustomSnackbar(getView(), "Success", getActivity());
         Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
 
-        // Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
        /* progressDialog.setMessage("Success");
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -168,8 +168,8 @@ public class SignUp extends Fragment implements ISignupView {
     @Override
     public void onSignupFailure(String errorMessage) {
 
-        CustomeSnakeBar.showCustomSnackbar(getView(), errorMessage, getActivity());
-        // Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
+        // CustomeSnakeBar.showCustomSnackbar(getView(), errorMessage, getActivity());
+        Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show();
       /*  progressDialog.setMessage("failed");
         progressDialog.setCancelable(false); // Prevent dismissing by tapping outside
         progressDialog.show();

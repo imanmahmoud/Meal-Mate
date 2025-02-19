@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -139,7 +140,8 @@ public class MealInfoFragment extends Fragment implements IMealInfoView {
 
     @Override
     public void showMessage(String message) {
-        CustomeSnakeBar.showCustomSnackbar(recyclerView, message, getActivity());
+        // CustomeSnakeBar.showCustomSnackbar(recyclerView, message, getActivity());
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     public void loadVideo(String videoId) {
