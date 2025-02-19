@@ -181,6 +181,7 @@ public class MealInfoFragment extends Fragment implements IMealInfoView {
                     year, month, day
             );
 
+
             // Set min and max dates (restrict to the current week)
             datePickerDialog.getDatePicker().setMinDate(startOfWeek);
             datePickerDialog.getDatePicker().setMaxDate(endOfWeek);
